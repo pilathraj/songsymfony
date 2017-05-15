@@ -50,6 +50,35 @@ class User extends BaseUser
 	}
 	
 	
+	/**
+     * @ORM\Column(type="datetime")
+     */
+    private $modified;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        // update the modified time
+        $this->setModified(new \DateTime());
+        // for newly created entries
+        if ($this->getCreated() == null) {
+            $this->setCreated(new \DateTime('now'));
+        }
+    }
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        // update the modified time
+        $this->setModified(new \DateTime());
+    }
+	
 
     /**
      * Get id
@@ -108,5 +137,52 @@ class User extends BaseUser
     {
         return $this->lastname;
     }
-}
 
+    /**
+     * Set modified
+     *
+     * @param \DateTime $modified
+     *
+     * @return User
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+
+        return $this;
+    }
+
+    /**
+     * Get modified
+     *
+     * @return \DateTime
+     */
+    public function getModified()
+    {
+        return $this->modified;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return User
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+}
