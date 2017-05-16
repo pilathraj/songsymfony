@@ -51,3 +51,13 @@ php bin/console doctrine:generate:entities --no-backup AppBundle:User
 php bin/console doctrine:schema:update --dump-sql
 # once you are comfortable with that, force update it
 php bin/console doctrine:schema:update --force
+
+# downloaded doctrine fixtures for load data...
+$ composer require doctrine/doctrine-fixtures-bundle ^2.3 --dev
+
+# To prove that the install is successful, we should have a new entry in the console php bin/console    --> doctrine:fixtures:load  is available in the list.
+
+mkdir -p src/AppBundle/DataFixtures/ORM
+
+#Now, let us insert the fixtures by running the command line
+php bin/console doctrine:fixtures:load -n
